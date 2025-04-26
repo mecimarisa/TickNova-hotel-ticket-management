@@ -1,6 +1,7 @@
 package org.mmeci;
 
 import jakarta.persistence.EntityManager;
+import lombok.AllArgsConstructor;
 import org.mmeci.config.HibernateConfiguration;
 import org.mmeci.entity.Client;
 import org.mmeci.service.BookingService;
@@ -21,7 +22,7 @@ public class Main {
         BookingService bookingService = new BookingService(entityManager);
         ClientService clientService = new ClientService(entityManager);
         HotelService hotelService = new HotelService(entityManager);
-        RoomService roomService = new RoomService(entityManager);
+       // RoomService roomService = new RoomService(entityManager);
 
         boolean continueLoop = true;
         while (continueLoop) {
