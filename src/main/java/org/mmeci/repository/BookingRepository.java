@@ -3,8 +3,6 @@ package org.mmeci.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.mmeci.config.HibernateConfiguration;
 import org.mmeci.entity.Booking;
 
 import java.util.List;
@@ -28,27 +26,26 @@ public class BookingRepository {
         }
     }
 
+    public Booking findById(long id) {
+        return entityManager.find(Booking.class, id);
+    }
+
     public List<Booking> getAllBookings() {
         return entityManager.createQuery("SELECT b FROM bookings b", Booking.class)
                 .getResultList();
 
     }
 
-    public void deleteBooking(Booking booking) {
+    public void deleteBooking(int bookingId) {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
             entityTransaction.begin();
-            entityManager.remove(booking);
+            entityManager.remove(bookingId);
             entityTransaction.commit();
         }catch (Exception e) {
             entityTransaction.rollback();
             e.printStackTrace();
         }
     }
-
-
-
-
-
 
 }

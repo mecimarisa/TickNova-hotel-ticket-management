@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 @Entity(name = "clients")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class Client {
 
     @Id
@@ -26,5 +25,12 @@ public class Client {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
+    }
+
+    public Client(String name, String lastname, String email) {
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+
     }
 }

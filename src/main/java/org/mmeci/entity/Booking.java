@@ -22,6 +22,8 @@ public class Booking {
     private int numberOfPersons;
     private Date chekInDate;
     private Date checkOutDate;
+    private String ticketText;
+
     @Enumerated(EnumType.STRING)
     private Payment payment;
 
