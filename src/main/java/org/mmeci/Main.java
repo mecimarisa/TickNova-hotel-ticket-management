@@ -2,9 +2,7 @@ package org.mmeci;
 
 import jakarta.persistence.EntityManager;
 import org.mmeci.config.HibernateConfiguration;
-import org.mmeci.entity.Booking;
-import org.mmeci.entity.Client;
-import org.mmeci.entity.Hotel;
+import org.mmeci.entity.*;
 import org.mmeci.service.BookingService;
 import org.mmeci.service.ClientService;
 import org.mmeci.service.HotelService;
@@ -78,8 +76,18 @@ public class Main {
                 case 3:
                     printRoomMenu();
                     int roomChoice = scanner.nextInt();
+                    switch (roomChoice) {
+                        case 1:
+                            addRoom(scanner, hotelService, roomService);
+                            break;
+                        case 2:
+                            getAvailableRoom(roomService);
+                            break;
+                        case 3:
+                            getTypeOfRoom(scanner, roomService);
+                            break;
+                    }
                     break;
-
                 case 4:
                     printBookingMenu();
                     int bookingMenuOption = scanner.nextInt();
@@ -242,10 +250,55 @@ public class Main {
     private static void printRoomMenu() {
         System.out.println("Choose operation:");
         System.out.println("1.Add Room");
-        System.out.println("2.Get Room by ID");
-        System.out.println("3.Get All Rooms");
+        System.out.println("2.Get Available Room");
+        System.out.println("3.Get type of Room");
         System.out.println("4.Exit");
     }
+    private static void addRoom(Scanner scanner, HotelService hotelService, RoomService roomService) {
+        System.out.println("Enter Room type (e.g., SINGLE, DOUBLE, SUITE):");
+        String type = scanner.nextLine();
+
+        // Convert the string to the corresponding TypeOfRoom enum value
+        TypeOfRoom roomType = TypeOfRoom.valueOf(type.toUpperCase()); // Ensure the input is capitalized
+
+        System.out.println("Enter Room price:");
+        double price = scanner.nextDouble();
+
+        System.out.println("Is the Room available? (true/false):");
+        boolean available = scanner.nextBoolean();
+        scanner.nextLine(); // Clear the buffer
+
+        System.out.println("Enter Hotel ID for this room:");
+        int hotelId = scanner.nextInt();
+        scanner.nextLine(); // Clear the buffer
+
+    }
+
+
+    private static void getAvailableRoom(RoomService roomService) {
+        System.out.println("Available Rooms:");
+        List<Room> availableRooms = roomService.getAvailableRooms();
+        for (Room room : availableRooms) {
+            if (room.isAvailable()) {
+                System.out.println(room);
+            }
+        }
+        System.out.println();
+    }
+
+    private static void getTypeOfRoom(Scanner scanner, RoomService roomService) {
+        System.out.println("Enter Room type:");
+        String type = scanner.nextLine();
+
+        System.out.println("Rooms of type " + type + ":");
+        List<Room> roomsByType = roomService.getRoomsByType(type);
+        for (Room room : roomsByType) {
+            System.out.println(room);
+        }
+        System.out.println();
+    }
+
+
 
     private static void printBookingMenu() {
         System.out.println("Choose operation:");

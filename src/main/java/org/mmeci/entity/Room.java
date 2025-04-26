@@ -23,8 +23,12 @@ public class Room {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
+    public Room(TypeOfRoom typeOfRoom, double price, boolean available, Hotel hotel) {
+        this.typeOfRoom = typeOfRoom;
+        this.price = price;
+        this.available = available;
+        this.hotel = hotel;
+    }
 
     public Room() {}
-
-
 }

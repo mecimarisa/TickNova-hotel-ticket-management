@@ -2,15 +2,16 @@ package org.mmeci.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import lombok.AllArgsConstructor;
 import org.mmeci.entity.Room;
-
 import java.util.List;
 
-@AllArgsConstructor
 public class RoomRepository {
-
     private final EntityManager entityManager;
+
+
+    public RoomRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     public void save(Room room) {
         EntityTransaction transaction = entityManager.getTransaction();
@@ -28,16 +29,16 @@ public class RoomRepository {
     }
 
 
-    public Room findByAvailableTrue(boolean available) {
+    public List<Room> findAvailableRooms(boolean available) {
         return entityManager.createQuery("SELECT r FROM Room r WHERE r.available = :available", Room.class)
                 .setParameter("available", available)
-                .getSingleResult();
+                .getResultList();
     }
 
 
-    public Room findByType(String typeOfRoom) {
-        return entityManager.createQuery("SELECT r FROM Room r WHERE r.typeOfRoom = :typeOfRoom", Room.class)
-                .setParameter("typeOfRoom", typeOfRoom)
-                .getSingleResult();
+    public List<Room> findRoomsByType(String type) {
+        return entityManager.createQuery("SELECT r FROM Room r WHERE r.typeOfRoom = :type", Room.class)
+                .setParameter("type", type)
+                .getResultList();
     }
 }
