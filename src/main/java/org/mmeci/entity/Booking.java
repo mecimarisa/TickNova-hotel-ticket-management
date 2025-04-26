@@ -1,10 +1,12 @@
 package org.mmeci.entity;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
+@NoArgsConstructor
 public class Booking {
 
     @Id
@@ -30,4 +32,5 @@ public class Booking {
         this.checkInDate = checkInDate;
         this.payment = payment;
     }
+
 }
