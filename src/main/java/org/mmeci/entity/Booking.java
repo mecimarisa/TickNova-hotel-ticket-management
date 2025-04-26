@@ -19,10 +19,15 @@ public class Booking {
 
     private Date chekInDate;
     private Date checkInDate;
+    @Enumerated(EnumType.STRING)
+    private Payment payment;
 
-
-
-
-
-
+    public Booking(Long id, Client client, Room room, Date chekInDate, Date checkInDate, Payment payment) {
+        this.id = id;
+        this.client = client;
+        this.room = room;
+        this.chekInDate = chekInDate;
+        this.checkInDate = checkInDate;
+        this.payment = payment;
+    }
 }
