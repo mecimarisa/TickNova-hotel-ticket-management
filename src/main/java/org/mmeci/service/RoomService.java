@@ -1,9 +1,23 @@
 package org.mmeci.service;
 
 import jakarta.persistence.EntityManager;
+import org.mmeci.entity.Hotel;
+import org.mmeci.entity.Room;
+import org.mmeci.repository.RoomRepository;
+
+import java.util.List;
 
 public class RoomService {
-    public RoomService(EntityManager entityManager) {
 
+    private final RoomRepository roomRepository;
+    public RoomService( EntityManager entityManager ) {
+        this.roomRepository = new RoomRepository(entityManager);
+    }
+    public Room findByAvailableTrue(boolean available) {
+        return roomRepository.findByAvailableTrue(available);
+    }
+
+    public Room findByType(String typeOfRoom) {
+        return roomRepository.findByType(typeOfRoom);
     }
 }
