@@ -2,6 +2,7 @@ package org.mmeci.repository;
 
 import org.mmeci.entity.Hotel;
 import jakarta.persistence.EntityManager;
+
 import java.util.List;
 
 public class HotelRepository {
@@ -12,27 +13,29 @@ public class HotelRepository {
         this.entityManager = entityManager;
     }
 
-    public Hotel findByName(String name) {
-        try {
-            return entityManager.createQuery("SELECT h FROM Hotel h WHERE h.name = :name", Hotel.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
-        } catch (Exception e) {
-            System.out.println("Hotel me emrin " + name + " nuk u gjet!");
-        }
-        return null;
+    // Kthe hotelet nga databaza
+    public List<Hotel> getAllHotels() {
+        return entityManager.createQuery("SELECT h FROM Hotel h", Hotel.class).getResultList();
     }
 
+    // Kërko hotelet me emër
+    public List<Hotel> findByName(String name) {
+        return entityManager.createQuery("SELECT h FROM Hotel h WHERE h.name = :name", Hotel.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
 
+    // Kërko hotelet me lokacion
     public List<Hotel> findByLocation(String location) {
-        try {
-            return entityManager.createQuery("SELECT h FROM Hotel h WHERE h.location = :location", Hotel.class)
-                    .setParameter("location", location)
-                    .getResultList();
-        } catch (Exception e) {
-            System.out.println("Nuk ka hotele në vendndodhjen: " + location);
-            return List.of();
-        }
+        return entityManager.createQuery("SELECT h FROM Hotel h WHERE h.location = :location", Hotel.class)
+                .setParameter("location", location)
+                .getResultList();
+    }
+
+    // Shto një hotel në databazë
+    public void addHotel(Hotel hotel) {
+        entityManager.getTransaction().begin(); // Fillim i transaksionit
+        entityManager.persist(hotel); // Ruaj hotelin në databazë
+        entityManager.getTransaction().commit(); // Mbyll transaksionin
     }
 }
-

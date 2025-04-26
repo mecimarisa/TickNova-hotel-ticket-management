@@ -6,7 +6,7 @@ import org.mmeci.entity.Client;
 import org.mmeci.repository.ClientRepository;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @AllArgsConstructor
 public class ClientService {
@@ -21,6 +21,12 @@ public class ClientService {
         Client client = new Client(name, lastname, email);
         clientRepository.addClient(client);
     }
+
+    public void deleteClientById(Long movieId) {
+        clientRepository.deleteClientyId(movieId);
+
+    }
+
 
     public Client getClientById(Long id){
         return clientRepository.getClientById(id);

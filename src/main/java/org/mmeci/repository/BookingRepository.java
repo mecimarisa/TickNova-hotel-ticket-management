@@ -36,11 +36,11 @@ public class BookingRepository {
 
     }
 
-    public void deleteBooking(int bookingId) {
+    public void deleteBooking(int bookingid) {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
             entityTransaction.begin();
-            entityManager.remove(bookingId);
+            entityManager.remove(bookingid);
             entityTransaction.commit();
         }catch (Exception e) {
             entityTransaction.rollback();

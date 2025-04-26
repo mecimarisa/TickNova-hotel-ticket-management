@@ -1,12 +1,14 @@
 package org.mmeci.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity(name = "bookings")
 @NoArgsConstructor
+@Data
 public class Booking {
 
     @Id
@@ -15,22 +17,38 @@ public class Booking {
 
     @ManyToOne
     private Client client;
+    private Long clientId;
 
     @ManyToOne
     private Room room;
+    private Long roomId;
+    private String roomType;
+
+    @ManyToOne
+    private Hotel hotel;
+    private Long hotelId;
 
     private int numberOfPersons;
-    private Date chekInDate;
-    private Date checkOutDate;
-    private String ticketText;
+    private int numberOfRooms;
+    private int chekInDate;
+    private int checkOutDate;
 
-    @Enumerated(EnumType.STRING)
-    private Payment payment;
 
-    public Booking(Date chekInDate, Date checkOutDate,int numberOfPersons) {
+    private String paymentMethod;
+
+    public Booking(Long clientId, Long roomId
+            , String roomType, Long hotelId, int numberOfPersons
+            , int numberOfRooms, int chekInDate
+            , int checkOutDate, String paymentMethod) {
+
+        this.clientId = clientId;
+        this.roomId = roomId;
+        this.roomType = roomType;
+        this.hotelId = hotelId;
+        this.numberOfPersons = numberOfPersons;
+        this.numberOfRooms = numberOfRooms;
         this.chekInDate = chekInDate;
         this.checkOutDate = checkOutDate;
-        this.numberOfPersons = numberOfPersons;
+        this.paymentMethod = paymentMethod;
     }
-
 }

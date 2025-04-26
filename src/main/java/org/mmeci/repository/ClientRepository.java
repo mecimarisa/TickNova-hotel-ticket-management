@@ -4,9 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import lombok.AllArgsConstructor;
 import org.mmeci.entity.Client;
-
 import java.util.List;
-import java.util.UUID;
+
 
 @AllArgsConstructor
 public class ClientRepository {
@@ -24,6 +23,24 @@ public class ClientRepository {
             e.printStackTrace();
         }
 
+    }
+
+    public void deleteClientyId(Long id) {
+        EntityTransaction transaction= entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Client client = entityManager.find(Client.class, id);
+            if (client != null) {
+
+                entityManager.remove(client);
+                transaction.commit();
+
+            }
+
+        }catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
     }
 
     public Client getClientById(Long id){

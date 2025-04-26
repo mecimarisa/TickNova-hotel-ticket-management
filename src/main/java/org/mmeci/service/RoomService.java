@@ -1,11 +1,9 @@
 package org.mmeci.service;
 
 import jakarta.persistence.EntityManager;
-import org.mmeci.entity.Hotel;
 import org.mmeci.entity.Room;
 import org.mmeci.repository.RoomRepository;
 
-import java.util.List;
 
 public class RoomService {
 

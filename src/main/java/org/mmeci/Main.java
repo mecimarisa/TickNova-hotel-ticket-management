@@ -1,9 +1,10 @@
 package org.mmeci;
 
 import jakarta.persistence.EntityManager;
-import lombok.AllArgsConstructor;
 import org.mmeci.config.HibernateConfiguration;
+import org.mmeci.entity.Booking;
 import org.mmeci.entity.Client;
+import org.mmeci.entity.Hotel;
 import org.mmeci.service.BookingService;
 import org.mmeci.service.ClientService;
 import org.mmeci.service.HotelService;
@@ -11,7 +12,7 @@ import org.mmeci.service.RoomService;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +27,6 @@ public class Main {
 
         boolean continueLoop = true;
         while (continueLoop) {
-
             printFirstMenu();
             int firstMenuOption = scanner.nextInt();
 
@@ -47,11 +47,64 @@ public class Main {
                             getAllClients(clientService);
                             break;
 
+                        case 4:
+                            deleteClientById(scanner, clientService);
+                            break;
 
                     }
+                    break;
+
+                case 2:
+                    printHotelMenu();
+                    int hotelChoice = scanner.nextInt();
+                    switch (hotelChoice) {
+                        case 1:
+                            addHotel(scanner, hotelService);
+                            break;
+                        case 2:
+                            getHotelByName(scanner, hotelService);
+                            break;
+                        case 3:
+                            getHotelByLocation(scanner, hotelService);
+                            break;
+                        case 4:
+                            getAllHotels(hotelService);
+                            break;
+                        case 5:
+                            break;
+                    }
+                    break;
+
+                case 3:
+                    printRoomMenu();
+                    int roomChoice = scanner.nextInt();
+                    break;
+
+                case 4:
+                    printBookingMenu();
+                    int bookingMenuOption = scanner.nextInt();
+                    switch (bookingMenuOption) {
+                        case 1:
+                            addBooking(scanner,bookingService);
+                            break;
+                        case 2:
+                            findBookingById(scanner,bookingService);
+                            break;
+                        case 3:
+                            getAllBookings(scanner,bookingService);
+                            break;
+                        case 4:
+                            deleteBookingById(scanner,bookingService);
+                            break;
+
+                    }
+
+                case 5:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
             }
         }
-
     }
 
     private static void printFirstMenu() {
@@ -70,6 +123,7 @@ public class Main {
         System.out.println("1.Add Client");
         System.out.println("2.Get Client by ID:");
         System.out.println("3.Get All Clients:");
+        System.out.println("4.Delete Client by ID:");
         System.out.println("4.Exit");
     }
 
@@ -91,7 +145,7 @@ public class Main {
     private static void getClientById(Scanner scanner, ClientService clientService) {
         System.out.println("Enter Client ID: ");
         String clientID = scanner.next();
-        if (!isValidUUID(clientID)) {
+        if (!isValidLong(clientID)) {
             System.out.println("This isn't a valid UUID format.");
             return;
         }
@@ -99,11 +153,24 @@ public class Main {
         System.out.println(client);
     }
 
-    private static boolean isValidUUID(String uuid) {
+    private static void deleteClientById(Scanner scanner, ClientService clientService) {
+        System.out.println("Please Enter Client id: ");
+        String clientID = scanner.next();
+
+        if (!isValidLong(clientID)) {
+            System.out.println("This isn't a valid UUID format.");
+            return;
+        }
+
+        clientService.deleteClientById(Long.valueOf(clientID));
+        System.out.println("Client deleted");
+    }
+
+    private static boolean isValidLong(String str) {
         try {
-            UUID.fromString(uuid);
+            Long.parseLong(str);
             return true;
-        } catch (IllegalArgumentException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
@@ -113,13 +180,138 @@ public class Main {
         clients.forEach(System.out::println);
     }
 
-    private static void printBookingMenu(){
+    private static void printHotelMenu() {
+        System.out.println("Choose operation:");
+        System.out.println("1.Add Hotel");
+        System.out.println("2.Find Hotel by Name");
+        System.out.println("3.Find Hotels by Location");
+        System.out.println("4.Get All Hotels");
+        System.out.println("5.Exit");
+    }
+
+    private static void addHotel(Scanner scanner, HotelService hotelService) {
+        System.out.println("Enter Hotel name:");
+        scanner.nextLine();  // To consume any leftover newline
+        String hotelName = scanner.nextLine();
+
+        System.out.println("Enter Hotel location:");
+        String hotelLocation = scanner.nextLine();
+
+        Hotel hotel = new Hotel(hotelName, hotelLocation);
+        hotelService.addHotel(hotel);
+
+        System.out.println("Hotel added successfully!");
+    }
+
+    private static void getHotelByName(Scanner scanner, HotelService hotelService) {
+        System.out.println("Enter Hotel name: ");
+        scanner.nextLine();
+        String hotelName = scanner.nextLine();
+
+        List<Hotel> hotels = hotelService.getHotelByName(hotelName);
+        if (hotels.isEmpty()) {
+            System.out.println("I couldn't find any hotels with the name: " + hotelName);
+        } else {
+            System.out.println("Found the following hotels with the name '" + hotelName + "':");
+            hotels.forEach(System.out::println);
+        }
+    }
+
+    private static void getHotelByLocation(Scanner scanner, HotelService hotelService) {
+        System.out.println("Enter Hotel location: ");
+        String hotelLocation = scanner.nextLine();
+
+        List<Hotel> hotels = hotelService.getHotelByLocation(hotelLocation);
+        if (hotels.isEmpty()) {
+            System.out.println("I couldn't find any hotels in the location: " + hotelLocation);
+        } else {
+            System.out.println("Found the following hotels in '" + hotelLocation + "':");
+            hotels.forEach(System.out::println);
+        }
+    }
+
+    private static void getAllHotels(HotelService hotelService) {
+        List<Hotel> hotels = hotelService.getAllHotels();
+        if (hotels.isEmpty()) {
+            System.out.println("No hotels available.");
+        } else {
+            hotels.forEach(System.out::println);
+        }
+    }
+
+    private static void printRoomMenu() {
+        System.out.println("Choose operation:");
+        System.out.println("1.Add Room");
+        System.out.println("2.Get Room by ID");
+        System.out.println("3.Get All Rooms");
+        System.out.println("4.Exit");
+    }
+
+    private static void printBookingMenu() {
         System.out.println("Choose operation:");
         System.out.println("1.Save Booking");
         System.out.println("2.Find Booking by ID");
         System.out.println("3.Get All Bookings");
         System.out.println("4.Delete Booking by ID");
         System.out.println("5.Exit");
+    }
+    private static void deleteBookingById(Scanner scanner, BookingService bookingService) {
+        System.out.println("Enter Booking ID for deletion");
+        int bookingId = scanner.nextInt();
+        bookingService.deleteBooking(bookingId);
+        System.out.println("Booking deleted successfully");
+
+
+    }
+
+    private static void getAllBookings(Scanner scanner, BookingService bookingService) {
+        List<Booking> bookings = bookingService.getAllBookings();
+        bookings.forEach(System.out::println);
+    }
+
+    private static void findBookingById(Scanner scanner, BookingService bookingService) {
+        System.out.println("Enter Booking ID");
+        Long bookingId = scanner.nextLong();
+        Booking booking = bookingService.findBookingById(bookingId);
+        System.out.println(booking);
+
+
+    }
+
+    private static void addBooking(Scanner scanner, BookingService bookingService) {
+        System.out.println("Enter Client ID");
+        Long clientId = scanner.nextLong();
+
+        System.out.println("Enter Hotel ID");
+        Long hotelId = scanner.nextLong();
+
+        System.out.println("Enter Room ID");
+        Long roomId = scanner.nextLong();
+
+        System.out.println("Enter Check-in date");
+        int checkIn = scanner.nextInt();
+
+        System.out.println("Enter Check-out date");
+        int checkOut = scanner.nextInt();
+
+        System.out.println("Enter number of persons");
+        int numberOfPersons = scanner.nextInt();
+
+        System.out.println("Enter type of rooms");
+        String roomType = scanner.next();
+
+        System.out.println("Enter number of rooms");
+        int numberOfRooms = scanner.nextInt();
+
+        System.out.println("Choose Payment method");
+        String paymentMethod = scanner.next();
+
+
+        bookingService.saveBooking(clientId,roomId,roomType,hotelId,numberOfPersons,numberOfRooms,checkIn
+                ,checkOut,paymentMethod);
+
+        System.out.println("Booking successful");
+
 
     }
 }
