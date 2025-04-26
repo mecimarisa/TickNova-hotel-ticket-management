@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.mmeci.entity.Client;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class ClientRepository {

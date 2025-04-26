@@ -30,7 +30,7 @@ public class Booking {
     public Booking(Date chekInDate, Date checkOutDate,int numberOfPersons) {
         this.chekInDate = chekInDate;
         this.checkOutDate = checkOutDate;
-        this.payment = payment;
+        this.numberOfPersons = numberOfPersons;
     }
 
 }

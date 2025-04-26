@@ -17,22 +17,15 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     private String lastname;
     private String email;
-
-    public Client(Long id, String name, String lastname, String email) {
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-    }
 
     public Client(String name, String lastname, String email) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-
     }
+
 }
