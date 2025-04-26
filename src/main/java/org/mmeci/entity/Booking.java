@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Entity
+@Entity(name = "bookings")
 @NoArgsConstructor
 public class Booking {
 
@@ -19,17 +19,15 @@ public class Booking {
     @ManyToOne
     private Room room;
 
+    private int numberOfPersons;
     private Date chekInDate;
-    private Date checkInDate;
+    private Date checkOutDate;
     @Enumerated(EnumType.STRING)
     private Payment payment;
 
-    public Booking(Long id, Client client, Room room, Date chekInDate, Date checkInDate, Payment payment) {
-        this.id = id;
-        this.client = client;
-        this.room = room;
+    public Booking(Date chekInDate, Date checkOutDate,int numberOfPersons) {
         this.chekInDate = chekInDate;
-        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
         this.payment = payment;
     }
 

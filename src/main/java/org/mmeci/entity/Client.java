@@ -5,11 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Entity(name = "clients")
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Client {
 
     @Id
@@ -19,7 +21,8 @@ public class Client {
     private String lastname;
     private String email;
 
-    public Client( String name, String lastname, String email) {
+    public Client(Long id, String name, String lastname, String email) {
+        this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.email = email;
