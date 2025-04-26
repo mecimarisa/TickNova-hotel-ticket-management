@@ -21,13 +21,21 @@ public class BookingService {
         Booking booking = new Booking(checkIn,checkOut,numberOfPersons);
         bookingRepository.saveBooking(booking);
 
+
+
+    }
+
+    public Booking findBookingById(long id) {
+        return bookingRepository.findById(id);
     }
 
     public List<Booking> getAllBookings() {
         return bookingRepository.getAllBookings();
     }
 
-    public void deleteBooking(Booking booking) {
-        bookingRepository.deleteBooking(booking);
+    public void deleteBooking(int bookingId) {
+        bookingRepository.deleteBooking(bookingId);
     }
+
+
 }
