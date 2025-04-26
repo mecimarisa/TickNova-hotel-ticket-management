@@ -22,7 +22,7 @@ public class ClientService {
         clientRepository.addClient(client);
     }
 
-    public Client getClientById(UUID id){
+    public Client getClientById(Long id){
         return clientRepository.getClientById(id);
     }
 
