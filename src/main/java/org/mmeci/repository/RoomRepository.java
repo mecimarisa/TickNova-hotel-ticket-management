@@ -3,37 +3,41 @@ package org.mmeci.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import lombok.AllArgsConstructor;
+import org.mmeci.entity.Room;
+
+import java.util.List;
 
 @AllArgsConstructor
 public class RoomRepository {
 
-        private final EntityManager entityManager;
+    private final EntityManager entityManager;
 
-        public void save(Room room){
-            EntityTransaction transaction = entityManager.getTransaction();
+    public void save(Room room) {
+        EntityTransaction transaction = entityManager.getTransaction();
 
-            try{
-                transaction.begin();
-                entityManager.persist(room);
-                transaction.commit();
-            } catch (Exception e){
+        try {
+            transaction.begin();
+            entityManager.persist(room);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
                 transaction.rollback();
-                e.printStackTrace();
             }
-
+            e.printStackTrace();
         }
-
-    public List<Room> findByAvailableTrue() {
-        String jpql = "SELECT r FROM Room r WHERE r.available = true";
-        TypedQuery<Room> query = entityManager.createQuery(jpql, Room.class);
-        return query.getResultList();
     }
 
-    public List<Room> findByType(String type) {
-        String jpql = "SELECT r FROM Room r WHERE r.type = :type";
-        TypedQuery<Room> query = entityManager.createQuery(jpql, Room.class);
-        query.setParameter("type", type);
-        return query.getResultList();
+
+    public Room findByAvailableTrue(boolean available) {
+        return entityManager.createQuery("SELECT r FROM Room r WHERE r.available = :available", Room.class)
+                .setParameter("available", available)
+                .getSingleResult();
     }
 
+
+    public Room findByType(String typeOfRoom) {
+        return entityManager.createQuery("SELECT r FROM Room r WHERE r.typeOfRoom = :typeOfRoom", Room.class)
+                .setParameter("typeOfRoom", typeOfRoom)
+                .getSingleResult();
+    }
 }
