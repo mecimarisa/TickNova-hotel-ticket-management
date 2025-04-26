@@ -6,6 +6,7 @@ import org.mmeci.entity.Client;
 import org.mmeci.repository.ClientRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class ClientService {
@@ -21,7 +22,7 @@ public class ClientService {
         clientRepository.addClient(client);
     }
 
-    public Client getClientById(Long id){
+    public Client getClientById(UUID id){
         return clientRepository.getClientById(id);
     }
 
