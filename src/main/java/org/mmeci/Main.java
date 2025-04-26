@@ -112,4 +112,14 @@ public class Main {
         List<Client> clients = clientService.getAllClients();
         clients.forEach(System.out::println);
     }
+
+    private static void printBookingMenu(){
+        System.out.println("Choose operation:");
+        System.out.println("1.Save Booking");
+        System.out.println("2.Find Booking by ID");
+        System.out.println("3.Get All Bookings");
+        System.out.println("4.Delete Booking by ID");
+        System.out.println("5.Exit");
+
+    }
 }
