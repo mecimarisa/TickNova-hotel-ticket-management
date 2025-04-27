@@ -199,7 +199,7 @@ public class Main {
 
     private static void addHotel(Scanner scanner, HotelService hotelService) {
         System.out.println("Enter Hotel name:");
-        scanner.nextLine();  // To consume any leftover newline
+        scanner.nextLine();
         String hotelName = scanner.nextLine();
 
         System.out.println("Enter Hotel location:");
@@ -256,21 +256,21 @@ public class Main {
     }
     private static void addRoom(Scanner scanner, HotelService hotelService, RoomService roomService) {
         System.out.println("Enter Room type (e.g., SINGLE, DOUBLE, SUITE):");
-        String type = scanner.nextLine();
+        String type = scanner.next();
 
-        // Convert the string to the corresponding TypeOfRoom enum value
-        TypeOfRoom roomType = TypeOfRoom.valueOf(type.toUpperCase()); // Ensure the input is capitalized
+
+        TypeOfRoom roomType = TypeOfRoom.valueOf(type.toUpperCase());
 
         System.out.println("Enter Room price:");
         double price = scanner.nextDouble();
 
         System.out.println("Is the Room available? (true/false):");
         boolean available = scanner.nextBoolean();
-        scanner.nextLine(); // Clear the buffer
+        scanner.nextLine();
 
         System.out.println("Enter Hotel ID for this room:");
         int hotelId = scanner.nextInt();
-        scanner.nextLine(); // Clear the buffer
+        scanner.nextLine();
 
     }
 

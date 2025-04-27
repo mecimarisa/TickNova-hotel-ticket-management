@@ -24,6 +24,6 @@ public class Client {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-    }
 
+    }
 }

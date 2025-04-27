@@ -22,7 +22,7 @@ public class Hotel {
     private List<Room> rooms = new ArrayList<>();
 
 
-    // Constructors
+
     public Hotel() {
     }
 

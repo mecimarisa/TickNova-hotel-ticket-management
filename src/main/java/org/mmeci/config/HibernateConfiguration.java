@@ -1,5 +1,6 @@
 package org.mmeci.config;
 
+import lombok.Getter;
 import org.mmeci.entity.Booking;
 import org.mmeci.entity.Room;
 import org.mmeci.entity.Hotel;
@@ -16,6 +17,7 @@ import java.util.Properties;
 
 public class HibernateConfiguration {
 
+    @Getter
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
@@ -47,9 +49,6 @@ public class HibernateConfiguration {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
-    }
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 
 }

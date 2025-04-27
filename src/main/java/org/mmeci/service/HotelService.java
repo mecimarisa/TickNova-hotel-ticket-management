@@ -10,28 +10,28 @@ public class HotelService {
 
     private final HotelRepository hotelRepository;
 
-    // Konstruktori për inicializimin e HotelRepository
+
     public HotelService(EntityManager entityManager) {
         this.hotelRepository = new HotelRepository(entityManager);
     }
 
-    // Get All Hotels
+
     public List<Hotel> getAllHotels() {
-        return hotelRepository.getAllHotels(); // Kthejmë të gjithë hotelet
+        return hotelRepository.getAllHotels();
     }
 
-    // Get Hotel by Name
+
     public List<Hotel> getHotelByName(String name) {
-        return hotelRepository.findByName(name); // Kërkojmë hotelet që përputhen me emrin
+        return hotelRepository.findByName(name);
     }
 
-    // Get Hotel by Location
+
     public List<Hotel> getHotelByLocation(String location) {
-        return hotelRepository.findByLocation(location); // Kërkojmë hotelet për një lokacion të caktuar
+        return hotelRepository.findByLocation(location);
     }
 
-    // Add Hotel to Database
+
     public void addHotel(Hotel hotel) {
-        hotelRepository.addHotel(hotel); // Thërrasim metodën e addHotel në HotelRepository për ta shtuar hotelin në databazë
+        hotelRepository.addHotel(hotel);
     }
 }
